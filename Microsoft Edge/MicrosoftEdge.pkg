@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Identifier</key>
+    <string>com.github.deegandh22.pkg.AndroidStudio-AppleSilicon</string>
+
+    <key>Description</key>
+    <string>Downloads the latest Android Studio DMG and builds a macOS installer package (.pkg).</string>
+
+    <key>MinimumVersion</key>
+    <string>2.3</string>
+
+    <key>Input</key>
+    <dict>
+        <key>NAME</key>
+        <string>Android Studio</string>
+        <key>DOWNLOAD_URL</key>
+        <string>https://redirector.gvt1.com/edgedl/android/studio/install/2024.2.1.9/android-studio-2024.2.1.9-mac.dmg</string>
+    </dict>
+
+    <key>Process</key>
+    <array>
+        <!-- 1️⃣ Download the DMG -->
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+            <key>Arguments</key>
+            <dict>
+                <key>url</key>
+                <string>%DOWNLOAD_URL%</string>
+            </dict>
+        </dict>
+
+        <!-- 2️⃣ Extract version from the DMG -->
+        <dict>
+            <key>Processor</key>
+            <string>AppDmgVersioner</string>
+            <key>Arguments</key>
+            <dict>
+                <key>dmg_path</key>
+                <string>%downloaded_path%</string>
+            </dict>
+        </dict>
+
+        <!-- 3️⃣ Build a .pkg installer -->
+        <dict>
+            <key>Processor</key>
+            <string>AppPkgCreator</string>
+        </dict>
+    </array>
+</dict>
+</plist>
